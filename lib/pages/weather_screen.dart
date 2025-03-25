@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import  'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../blocs/unit_bloc.dart';
@@ -86,10 +86,11 @@ class WeatherScreenState extends State<WeatherScreen> {
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
                           children: [
+                            SizedBox(height: 36.h),
                             Text(
                               "City: ${state.weather.city}",
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -101,31 +102,38 @@ class WeatherScreenState extends State<WeatherScreen> {
                             Text(
                               "5-Day Forecast",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 8.h),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: state.forecast.forecast.length,
+                          itemCount: state.forecast.length,
                           itemBuilder: (context, index) {
-                            final day = state.forecast.forecast[index];
+                            final day = state.forecast[index];
                             return Card(
                               margin: EdgeInsets.symmetric(
                                 horizontal: 16,
                                 vertical: 8,
                               ),
                               child: ListTile(
-                                leading: Image.network(
-                                  "https://openweathermap.org/img/w/${day.icon}.png",
+                                // tileColor: Colors.lightBlueAccent,
+                                leading: Icon(Icons.calendar_month),
+                                title: Text(
+                                  day.date,
+                                  style: TextStyle(fontSize: 12.r),
                                 ),
-                                title: Text(day.date,style: TextStyle(fontSize: 12.r),),
                                 subtitle: Text(
-                                  "${convertTemperature(day.temperature).toStringAsFixed(1)}°${isFahrenheit ? 'F' : 'C'} - ${day.description}",
+                                  "Minimum temperature ${convertTemperature(day.minTemp).toStringAsFixed(1)}°${isFahrenheit ? 'F' : 'C'},"
+                                  "\n Maximum temperature ${convertTemperature(day.maxTemp).toStringAsFixed(1)}°${isFahrenheit ? 'F' : 'C'} ",
+                                ),
+                                trailing: Text(
+                                  "avg ${convertTemperature(day.avgTemp).toStringAsFixed(1)}°${isFahrenheit ? 'F' : 'C'}",
                                 ),
                               ),
                             );

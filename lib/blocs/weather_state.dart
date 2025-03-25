@@ -9,7 +9,7 @@ class WeatherLoading extends WeatherState {}
 
 class WeatherLoaded extends WeatherState {
   final WeatherModel weather;
-  final ForecastModel forecast;
+  final List<ForecastModel> forecast;
 
   WeatherLoaded({required this.weather, required this.forecast});
 }
